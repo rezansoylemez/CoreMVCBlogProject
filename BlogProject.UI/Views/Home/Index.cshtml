@@ -1,8 +1,38 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model BlogProject.UI.Models.VM.PostUserVM
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@foreach (var item in Model.Posts)
+{
+<article class="col-12 col-md-6 tm-post">
+    <hr class="tm-hr-primary">
+    <a href="post.html" class="effect-lily tm-post-link tm-pt-60">
+        <div class="tm-post-link-inner">
+            <img src="~/@item.ImageURL" alt="Image" class="img-fluid">
+        </div>
+        <span class="position-absolute tm-new-badge">New</span>
+        <h2 class="tm-pt-30 tm-color-primary tm-post-title">@item.Title</h2>
+    </a>
+    <p class="tm-pt-30">
+        @if (item.PostDetail.Length > 100)
+        {
+            item.PostDetail.Substring(0, 100);
+<label>...</label>}
+                else
+                {
+                    item.PostDetail.ToString();
+                }
+
+        @item.PostDetail.ToString();
+    </p>
+    <div class="d-flex justify-content-between tm-pt-45">
+        <span class="tm-color-primary">@item.Tags</span>
+        <span class="tm-color-primary">@item.CreatedDate.Value.ToShortDateString()</span>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-between">
+        <span><i class="fa fa-eye"></i> @item.ViewCount.ToString()</span>
+        <span><i class="fa fa-user"></i> @Model.Users.Where(x => x.ID == item.UserID).FirstOrDefault().Firstname @Model.Users.Where(x => x.ID == item.UserID).FirstOrDefault().LastName</span>
+    </div>
+</article>}
