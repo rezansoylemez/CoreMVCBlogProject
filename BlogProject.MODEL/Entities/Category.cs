@@ -9,6 +9,10 @@ namespace BlogProject.MODEL.Entities
 {
     public class Category:CoreEntity
     {
+        public Category()
+        {
+            Posts = new List<Post>();
+        }
         public string CategoryName { get; set; }
         public string Description { get; set; }
 

@@ -1,5 +1,7 @@
+﻿using BlogProject.MODEL.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +24,14 @@ namespace BlogProject.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            
+            services.AddControllersWithViews().AddRazorRuntimeCompilation(); // Runtime da derleme iþlemini yapabilmesi için AddRazorRuntimeCompilation() eklenir. Ayrýca NuGet Packageta ilgili pakette inidirilmediliri.
+            services.AddDbContext<BlogContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConStr"));
+            });
+
+            services.AddScoped(typeof(CORE.Service.ICoreService<>), typeof(SERVICE.Base.BaseService<>)); // Dependency Injection
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
