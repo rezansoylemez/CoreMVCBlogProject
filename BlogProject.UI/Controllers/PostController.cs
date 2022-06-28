@@ -29,7 +29,7 @@ namespace BlogProject.UI.Controllers
 
         public IActionResult PostByAuthor(Guid id)
         {
-            ViewBag.Author=us.GetByID(id).Firstname + " " + us.GetByID(id).LastName;
+            ViewBag.Author=us.GetByID(id).FirstName + " " + us.GetByID(id).LastName;
             return View(ps.GetDefault(x => x.UserID == id));
         }
         public IActionResult Index()
