@@ -61,6 +61,8 @@ namespace BlogProject.MODEL.Context
                             entity.CreatedIP = ipAdress;
                             entity.CreatedDate = date;
                             break;
+                        default:
+                            break;
                     }
                 }
             }

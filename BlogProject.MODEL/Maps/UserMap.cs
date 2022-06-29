@@ -15,7 +15,7 @@ namespace BlogProject.MODEL.Maps
         public override void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("Users");
-            builder.Property(z => z.Firstname).HasMaxLength(100).IsRequired(true);
+            builder.Property(z => z.FirstName).HasMaxLength(100).IsRequired(true);
             builder.Property(z => z.LastName).HasMaxLength(100).IsRequired(true);
             builder.Property(z => z.EmailAdress).HasMaxLength(255).IsRequired(true);
             builder.Property(z => z.Title).HasMaxLength(100).IsRequired(true);
