@@ -1,4 +1,6 @@
-﻿using BlogProject.MODEL.Context;
+﻿using BlogProject.CORE.Service;
+using BlogProject.MODEL.Context;
+using BlogProject.SERVICE.Base;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,12 +28,8 @@ namespace BlogProject.UI
         {
             
             services.AddControllersWithViews().AddRazorRuntimeCompilation(); // Runtime da derleme iþlemini yapabilmesi için AddRazorRuntimeCompilation() eklenir. Ayrýca NuGet Packageta ilgili pakette inidirilmediliri.
-            services.AddDbContext<BlogContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConStr"));
-            });
-
-            services.AddScoped(typeof(CORE.Service.ICoreService<>), typeof(SERVICE.Base.BaseService<>)); // Dependency Injection
+            services.AddDbContext<BlogContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConStr")));
+            services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>)); // Dependency Injection
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,13 +44,19 @@ namespace BlogProject.UI
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
+            
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "areaAdmin",
+                    pattern: "{area:exists}{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

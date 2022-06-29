@@ -15,14 +15,13 @@ namespace BlogProject.UI.Controllers
         private readonly ICoreService<User> us;
         public CategoryController(ICoreService<Category> _cs, ICoreService<Post> _ps, ICoreService<User> _us)
         {
-
             cs = _cs;
             us = _us;
             ps = _ps;
         }
         public IActionResult Index()
         {
-            return View();
+            return View(cs.GetActive());
         }
     }
 }
